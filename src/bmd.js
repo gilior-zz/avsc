@@ -20,45 +20,42 @@ class BMD {
     validate(schema_type, obj) {
         var schame = this.get_schema(schema_type);
 
-        if (Object.entries(schame).length != Object.entries(obj).length) return false;
-        if (JSON.stringify(Object.keys(schame)) != JSON.stringify(Object.keys(obj))) return false;
 
+        return this.c(obj, schame)
+
+    }
+
+    c(obj, schame) {
         var obj_entries = Object.entries(obj);
-
         var schema_entries = Object.entries(schame);
+        if (obj_entries.length != schema_entries.length) return false;
+        if (JSON.stringify(Object.keys(schame)) != JSON.stringify(Object.keys(obj))) return false;
         for (var obj_entry of obj_entries) {
             console.log('obj_value', obj_entry)
 
 
             console.log('schema_entries', schema_entries)
             // find on schema entry with this type
-            var entry = schema_entries.find(schema_entry => obj_entry[0] == schema_entry[0]);
+            var schema_entry = schema_entries.find(schema_entry => obj_entry[0] == schema_entry[0]);
 
 
-            console.log('entry', entry)
+            console.log('schema_entry', schema_entry)
             // if not found match entry on schema -> invalid obj param
-            if (!entry) return false;
-
-            //remove prop from schema
-            // delete schame[entry[0]];
-
-            console.log('schame', schame);
-
-
+            if (!schema_entry) return false;
+            var is_same_type = this.compareTypes(schema_entry[1], obj_entry[1])
+            if (!is_same_type) return false;
         }
         return true;
-
     }
 
-    compareTypes(type_a, type_b) {
+    compareTypes(schema_type, obj_value) {
         //primitve type
-        if (typeof type_a == 'string') {
-
-            // type not primitive
-            if (typeof type_b == 'string') return false
+        if (typeof schema_type == 'string') {
+            var obj_type = typeof obj_value
+            return schema_type == obj_type
         }
-        else  { // complex type
-
+        else { // complex type
+            return this.c(obj_value, schema_type)
         }
 
     }

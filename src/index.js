@@ -11,19 +11,27 @@ const bmd = require('./bmd')
 
 
 //point
-obj = {x: 3, y: 7}
-isValid = bmd.validate('point', obj)
-console.log('point', isValid)
+// obj = {x: 3, y: 7}
+// isValid = bmd.validate('point', obj)
+// console.log('point', isValid)
 
 
 //line
+// obj = {
+//     a: {x: 5, y: 6},
+//     b: {x: 7, y: 8}
+// }
+// isValid = bmd.validate('line', obj)
+// console.log('line', isValid)
+
+//room
 obj = {
-    a: {x: 5, y: 6},
-    b: {x: 7, y: 8}
+    number: 7,
+    boundaryPoints: [{x: "number", y: "number"}]
 }
 isValid = bmd.validate('line', obj)
 console.log('line', isValid)
-// bmd.validate('line', point) // false
+
 
 // if (argv.ships > 3 && argv.distance < 53.5) {
 //     console.log('Plunder more riffiwobbles!')
