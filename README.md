@@ -51,3 +51,6 @@ Example data can be found under the data folder.
 4. Improve the validate function performance by leveraging parallel execution
 
 5. Bonus: Dockerise the solution so that one can deploy a docker image with the BMD service available to be used in any js code.
+
+
+node --experimental-worker index.js
