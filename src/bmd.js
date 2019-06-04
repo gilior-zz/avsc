@@ -24,10 +24,11 @@ class BMD {
 
     validate(schema_type, schema_dict) {
         for (var schema of schema_dict) {
-            var res = this.validate_obj(schema)
+            var res = this.validate_obj(schema_type, schema)
             if (!res)
                 return false;
         }
+        return true;
 
     }
 
@@ -42,7 +43,6 @@ class BMD {
             // find on schema entry with this type
             var schema_entry = schema_entries.find(schema_entry => (obj_entry[0] == schema_entry[0])
                 || (!isNaN(parseInt(obj_entry[0])) && !isNaN(parseInt(schema_entry[0]))));
-
 
 
             // if not found match entry on schema -> invalid obj param

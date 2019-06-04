@@ -40,7 +40,6 @@ obj = {
             "boundaryPoints": [
                 {
                     "x": -4086,
-                    "x": -4086,
                     "y": 6219
                 },
                 {
@@ -4535,7 +4534,7 @@ obj = {
         "company": "Achitecture LTD"
     }
 }
-isValid = bmd.validate_obj('level', obj)
+isValid = bmd.validate('level', [obj])
 console.log('level', isValid)
 
 // if (argv.ships > 3 && argv.distance < 53.5) {
