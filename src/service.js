@@ -1,10 +1,45 @@
-const {workerData, parentPort} = require('worker_threads')
+const {workerData, parentPort} = require('worker_threads');
 
-// You can do any heavy stuff here, in a synchronous way
-// without blocking the "main thread"
-for (var j = 0; j < 9999; j++) {
-    console.log(j)
+function comapre_by_schema_structure(obj, schema) {
+    var obj_entries = Object.entries(obj);
+    var schema_entries = Object.entries(schema);
+    for (var obj_entry of obj_entries) {
+
+        //find schema entry that match this obj_entry
+        var schema_entry = schema_entries.find(schema_entry => (obj_entry[0] == schema_entry[0])
+            || (!isNaN(parseInt(obj_entry[0])) && !isNaN(parseInt(schema_entry[0]))));
+
+
+        // if not found match entry on schema -> invalid obj param
+        if (!schema_entry)
+            return false;
+        var is_same_type = compareTypes(schema_entry[1], obj_entry[1]); // try to match by obj value
+        if (!is_same_type)
+            return false;
+    }
+    return true;
 }
-// console.log('hi')
-if(j==9999)
-parentPort.postMessage({hello: workerData})
+
+function compareTypes(schema_type, obj_value) {
+
+    // if schema_type is is  object
+    if (Object.prototype.toString.call(schema_type) === '[object Object]')
+        if (Object.prototype.toString.call(obj_value) !== '[object Object]'
+            || Object.keys(schema_type).length != Object.keys(obj_value).length)
+            return false;
+
+    //primitve type
+    if (typeof schema_type == 'string') {
+        var obj_type = typeof obj_value;
+        if (schema_type != obj_type)
+            return false;
+        return true;
+    } else { // complex type
+        return comapre_by_schema_structure(obj_value, schema_type)
+    }
+}
+
+const c = comapre_by_schema_structure(workerData.obj, workerData.schema);
+parentPort.postMessage({res: c});
+
+

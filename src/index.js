@@ -1,5 +1,5 @@
-const argv = require('yargs').argv
-const bmd = require('./bmd')
+const argv = require('yargs').argv;
+const bmd = require('./bmd');
 
 // console.log('point', bmd.get_schema('point'));
 // console.log("\n")
@@ -12,13 +12,26 @@ const bmd = require('./bmd')
 
 
 //point
-// obj = [{x: 3, y: 7}, {x: 3, y: 7}]
+// obj = [
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     {x: 3, y: 7},
+//     ]
 // bmd.validate('point', obj)
 //     .then((res) => {
 //         console.log(res);
 //     })
 // console.log('point', isValid)
-
 
 //line
 // obj = {
@@ -38,7 +51,7 @@ const bmd = require('./bmd')
 // console.log('room', isValid)
 
 // level
-obj_arr = [{
+obj_a = {
     "rooms": [
         {
             "boundaryPoints": [
@@ -4537,11 +4550,11 @@ obj_arr = [{
         "age": 38,
         "company": "Achitecture LTD"
     }
-}]
-bmd.validate('level', obj_arr)
+};
+var obj_b = {...obj_a,number:'8'};
+
+bmd.validate('level', [obj_a, obj_a, obj_a,obj_a,obj_a,obj_a,obj_a,obj_a,obj_a,obj_a,obj_a])
     .then((res) => {
-      console.log(res)
-    })
+        console.log(res)
+    });
 // console.log('level', isValid)
-
-
